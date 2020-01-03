@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_01_182602) do
+ActiveRecord::Schema.define(version: 2020_01_03_145534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,29 @@ ActiveRecord::Schema.define(version: 2020_01_01_182602) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_items_on_category_id"
+  end
+
+  create_table "items_events", force: :cascade do |t|
+    t.bigint "item_id"
+    t.bigint "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_items_events_on_event_id"
+    t.index ["item_id"], name: "index_items_events_on_item_id"
+  end
+
+  create_table "items_orders", id: false, force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.bigint "order_id", null: false
+  end
+
+  create_table "items_shopping_carts", force: :cascade do |t|
+    t.bigint "item_id"
+    t.bigint "shopping_cart_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_items_shopping_carts_on_item_id"
+    t.index ["shopping_cart_id"], name: "index_items_shopping_carts_on_shopping_cart_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -88,6 +111,10 @@ ActiveRecord::Schema.define(version: 2020_01_01_182602) do
   add_foreign_key "comments", "items"
   add_foreign_key "comments", "users"
   add_foreign_key "items", "categories"
+  add_foreign_key "items_events", "events"
+  add_foreign_key "items_events", "items"
+  add_foreign_key "items_shopping_carts", "items"
+  add_foreign_key "items_shopping_carts", "shopping_carts"
   add_foreign_key "orders", "users"
   add_foreign_key "ratings", "items"
   add_foreign_key "ratings", "users"
