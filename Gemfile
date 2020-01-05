@@ -41,10 +41,12 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'pry'
 end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
 end
 
 group :development do
