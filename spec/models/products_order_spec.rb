@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe ItemsOrder, type: :model do
+RSpec.describe ProductsOrder, type: :model do
   describe 'associations' do
-    it { should belong_to(:item) }
+    it { should belong_to(:product) }
     it { should belong_to(:order) }
   end
 end

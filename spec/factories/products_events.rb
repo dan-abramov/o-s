@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :items_event do
-    item { nil }
+  factory :products_event do
+    product { nil }
     event { nil }
   end
 end

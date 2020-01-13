@@ -5,7 +5,7 @@ RSpec.describe Order, type: :model do
   it_behaves_like 'commentable'
 
   describe 'associations' do
-    it { should have_many(:items) }
+    it { should have_many(:products) }
     it { should belong_to(:user) }
   end
 end

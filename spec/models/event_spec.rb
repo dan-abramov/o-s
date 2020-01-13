@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
   describe 'associations' do
-    it { should have_many(:items).through(:items_event) }
+    it { should have_many(:products).through(:products_event) }
   end
 
   describe 'validations' do

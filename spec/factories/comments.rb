@@ -2,18 +2,19 @@ FactoryBot.define do
   factory :comment do
     body { "MyText" }
     user
-    item
+    commentable_type { "Product" }
+    commentable_id { 1 }
   end
 
   factory :comment_with_associations, class: 'Comment' do
     body { "MyText" }
     user
-    item
+    product
   end
 
   factory :updated_comment, class: 'Comment' do
     body { "UpdatedBody" }
     user { nil }
-    item { nil }
+    product { nil }
   end
 end

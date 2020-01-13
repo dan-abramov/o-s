@@ -40,38 +40,6 @@ ActiveRecord::Schema.define(version: 2020_01_07_194230) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "items", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.bigint "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_items_on_category_id"
-  end
-
-  create_table "items_events", force: :cascade do |t|
-    t.bigint "item_id"
-    t.bigint "event_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_items_events_on_event_id"
-    t.index ["item_id"], name: "index_items_events_on_item_id"
-  end
-
-  create_table "items_orders", id: false, force: :cascade do |t|
-    t.bigint "item_id", null: false
-    t.bigint "order_id", null: false
-  end
-
-  create_table "items_shopping_carts", force: :cascade do |t|
-    t.bigint "item_id"
-    t.bigint "shopping_cart_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_items_shopping_carts_on_item_id"
-    t.index ["shopping_cart_id"], name: "index_items_shopping_carts_on_shopping_cart_id"
-  end
-
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -79,13 +47,49 @@ ActiveRecord::Schema.define(version: 2020_01_07_194230) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  create_table "products_events", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_products_events_on_event_id"
+    t.index ["product_id"], name: "index_products_events_on_product_id"
+  end
+
+  create_table "products_orders", force: :cascade do |t|
+    t.bigint "order_id"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_products_orders_on_order_id"
+    t.index ["product_id"], name: "index_products_orders_on_product_id"
+  end
+
+  create_table "products_shopping_carts", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "shopping_cart_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_products_shopping_carts_on_product_id"
+    t.index ["shopping_cart_id"], name: "index_products_shopping_carts_on_shopping_cart_id"
+  end
+
   create_table "ratings", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "item_id"
+    t.bigint "product_id"
     t.integer "rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_ratings_on_item_id"
+    t.index ["product_id"], name: "index_ratings_on_product_id"
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
@@ -110,13 +114,15 @@ ActiveRecord::Schema.define(version: 2020_01_07_194230) do
   end
 
   add_foreign_key "comments", "users"
-  add_foreign_key "items", "categories"
-  add_foreign_key "items_events", "events"
-  add_foreign_key "items_events", "items"
-  add_foreign_key "items_shopping_carts", "items"
-  add_foreign_key "items_shopping_carts", "shopping_carts"
   add_foreign_key "orders", "users"
-  add_foreign_key "ratings", "items"
+  add_foreign_key "products", "categories"
+  add_foreign_key "products_events", "events"
+  add_foreign_key "products_events", "products"
+  add_foreign_key "products_orders", "orders"
+  add_foreign_key "products_orders", "products"
+  add_foreign_key "products_shopping_carts", "products"
+  add_foreign_key "products_shopping_carts", "shopping_carts"
+  add_foreign_key "ratings", "products"
   add_foreign_key "ratings", "users"
   add_foreign_key "subscriptions", "users"
 end

@@ -1,19 +1,19 @@
 class CommentsController < ApplicationController
   def create
-    @item = Item.find(item_params[:item_id])
-    @comment = @item.comments.create(comment_params)
+    @commentable = commentable_params[:class].find(commentable_params[:id])
+    @comment = @commentable.comments.create(comment_params)
     if @comment.save
-      redirect_to @item
+      redirect_to "/#{@comment.commentable_type.downcase}s/#{@comment.commentable_id}"
     else
       flash[:notice] = 'Комментарий не был создан'
     end
   end
 
   def update
-    @comment = Comment.find(params[:id])
-    @item = @comment.item
+    @commentable = commentable_params[:class].find(commentable_params[:id])
+    @comment = @commentable.comments.find(params[:id])
     if @comment.update(comment_params)
-      redirect_to @item
+      redirect_to "/#{@comment.commentable_type.downcase}s/#{@comment.commentable_id}"
     else
       flash[:notice] = 'Комментарий не был обновлен'
     end
@@ -22,10 +22,14 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body, :item_id, :user_id)
+    params.require(:comment).permit(:body, :user_id)
   end
 
-  def item_params
-    params.permit(:item_id)
+  def commentable_params
+    if params.permit(:product_id).empty?
+      { class: Order, id: params.permit(:order_id)[:order_id] }
+    elsif params.permit(:order_id).empty?
+      { class: Product, id: params.permit(:product_id)[:product_id] }
+    end
   end
 end

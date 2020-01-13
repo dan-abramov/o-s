@@ -1,11 +1,11 @@
 FactoryBot.define do
-  factory :item do
+  factory :product do
     title { "MyString" }
     body { "MyText" }
     category { nil }
   end
 
-  factory :incorrect_item, class: 'Item' do
+  factory :incorrect_product, class: 'Product' do
     title { nil }
     body { nil }
     category { nil }
