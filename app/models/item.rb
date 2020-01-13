@@ -1,7 +1,8 @@
 class Item < ApplicationRecord
+  include Commentable
   validates :title, :body, presence: true
 
-  belongs_to :category
+  belongs_to :category, optional: true
   has_many :comments
   has_many :ratings
 
