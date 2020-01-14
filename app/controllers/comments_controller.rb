@@ -4,9 +4,11 @@ class CommentsController < ApplicationController
   def create
     @commentable = commentable_params[:class].find(commentable_params[:id])
     @comment = @commentable.comments.create(comment_params.merge(user_id: current_user.id))
-    pry
     if @comment.save
-      redirect_to "/#{@comment.commentable_type.downcase}s/#{@comment.commentable_id}"
+      # redirect_to "/#{@comment.commentable_type.downcase}s/#{@comment.commentable_id}"
+      respond_to do |format|
+        format.js { render 'comments/create' }
+      end
     else
       flash[:notice] = 'Комментарий не был создан'
     end
