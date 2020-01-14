@@ -1,1 +1,10 @@
-h1 Hello
+h1 Новый товар
+
+= form_for @product do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.label :body
+  = f.text_field :body
+  = f.label :category_id
+  = f.text_field :category_id
+  = f.submit

@@ -5,6 +5,11 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @comment = Comment.new
+  end
+
+  def new
+    @product = Product.new
   end
 
   def create

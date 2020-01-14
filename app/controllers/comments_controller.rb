@@ -3,7 +3,8 @@ class CommentsController < ApplicationController
 
   def create
     @commentable = commentable_params[:class].find(commentable_params[:id])
-    @comment = @commentable.comments.create(comment_params)
+    @comment = @commentable.comments.create(comment_params.merge(user_id: current_user.id))
+    pry
     if @comment.save
       redirect_to "/#{@comment.commentable_type.downcase}s/#{@comment.commentable_id}"
     else
@@ -24,7 +25,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body, :user_id)
+    params.require(:comment).permit(:body)
   end
 
   def commentable_params

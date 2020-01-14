@@ -1,0 +1,11 @@
+= @product.title
+br
+= @product.body
+br
+= form_for [@product, @comment], authenticity_token: true, multipart: true do |f|
+  = f.label :body
+  = f.text_field :body
+  = f.submit
+br
+- @product.comments.each do |comment|
+  p= comment.body
